@@ -1,5 +1,5 @@
-Flask==2.0.1
-opencv-python==4.5.3.56
+Flask==2.1.4
+opencv-python==4.5.3
 scikit-learn==0.24.2
-tensorflow==2.6.0
-edgeimpulse-sdk>=1.0.8  # Use >= to get the latest version greater than or equal to X.Y.Z
+numpy==1.21.2
+tensorflow==2.5.0
