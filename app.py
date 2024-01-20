@@ -281,12 +281,3 @@ print("Model trained with data augmentation and saved successfully.")
 
 
 
-if __name__ == '__main__':
-    # Create 'data' and 'models' folders if they don't exist
-    data_folder = os.path.join(os.getcwd(), 'data')
-    os.makedirs(data_folder, exist_ok=True)
-
-    models_folder = os.path.join(os.getcwd(), 'models')
-    os.makedirs(models_folder, exist_ok=True)
-
-    app.run(debug=True)
