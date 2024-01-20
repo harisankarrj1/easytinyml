@@ -1,0 +1,34 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Object Detection Web App</title>
+</head>
+<body>
+    <h1>Welcome to Object Detection Web App</h1>
+    <p>This is a simple web page created in VSCode.</p>
+
+    <form action="javascript:void(0);" id="upload-form" enctype="multipart/form-data">
+        <input type="file" id="file-input" accept="image/*">
+        <input type="button" value="Upload Image" onclick="uploadImage()">
+    </form>
+
+    <h2>Uploaded Image</h2>
+    <img id="uploadedImage" src="" alt="Uploaded Image">
+
+    <script>
+        function uploadImage() {
+            var input = document.getElementById('file-input');
+            var file = input.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function(){
+                var img = document.getElementById('uploadedImage');
+                img.src = reader.result;
+            };
+
+            reader.readAsDataURL(file);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,474 @@
+<!-- v5 -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<img src="{{ url_for('static', filename='kudsit_logo.jpeg') }}" alt="Logo" id="site-logo">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyTinyML </title>
+    <style>
+       body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('https://media.giphy.com/media/CVtNe84hhYF9u/giphy.gif') center center fixed;
+            background-size: cover;
+            color: white;
+        }
+
+        #site-logo {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            width: 120px;
+            height: auto;
+            z-index: 1000;
+        }
+
+
+        
+      header {
+            background: #222;
+            padding: 10px;
+            text-align: center;
+            color: white;
+            
+        }
+
+        h1 {
+            font-size: 3.5em;
+            margin: 10px;
+            text-align: center;
+            color: #ffffff;
+            animation: breathe 4s infinite ease-in-out;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            margin: 10px;
+            text-align: center;
+            color: #db7508;
+            animation: breathe 4s infinite ease-in-out;
+        }
+        h4 {
+            font-size: 1em;
+            margin: 10px;
+            text-align: center;
+            color: #f7f5f3;
+            animation: none;
+        }
+
+        @keyframes breathe {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        p.sub-para {
+            font-size: 1.2em;
+            margin: 10px;
+            text-align: center;
+            color: #a9a5a5;
+            opacity: 0; /* Initialize opacity to 0 for animation */
+        }
+
+        
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-30px);
+            }
+            60% {
+                transform: translateY(-15px);
+            }
+        }
+
+        h2 {
+            font-size: 1.5em;
+            margin: 10px;
+            text-align: center;
+            color: #333;
+        }
+
+        p {
+            margin: 10px;
+            text-align: center;
+            color: #a09898;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        input,
+        select,
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #555;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background: #333;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #555;
+        }
+
+        #image-gallery,
+        #labels-list {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .social-links {
+            margin-top: 20px;
+        }
+
+         /* Deploy, Profile, and Download Button */
+         button#deploy-button {
+            font-size: 14px;
+            padding: 8px 15px;
+        }
+
+        .social-link {
+            margin: 0 10px;
+            font-size: 18px;
+            color: #fbf2f2;
+            text-decoration: none;
+            transition: transform 0.3s ease-in-out;
+            text-align: center;
+        }
+
+        
+
+             
+
+        
+
+        .social-link:hover {
+            transform: scale(1.2);
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header>
+        <h1>EasyTinyML</h1>
+         
+        <p>നിങ്ങൾക്കും ചെയ്യാം TinyML</p>
+        <p>Developed by Harisankar R, MSc Electronics, Digital University Kerala</p>
+        
+    </header>
+    
+
+    <!-- Main Content Section -->
+    <div>
+
+        <h3>Object Classification</h3>
+        <p class="sub-para">Try your model now</p>
+
+        <!-- Image Upload Form -->
+        <form action="/upload" method="post" enctype="multipart/form-data">
+        <label for="images">Upload Images or Capture from Camera:</label>
+        <input type="file" name="images" id="images" accept="image/*" capture="camera" multiple>
+        <label for="label">Enter Label:</label>
+        <input type="text" name="label" id="label" placeholder="Enter Label">
+        <button type="submit">Upload Images</button>
+        </form>
+
+
+        <!-- Edit Model Form -->
+        <form action="/update_model" method="post" onsubmit="return updateModel()">
+            <h2>Edit Model Architecture</h2>
+            <label for="conv1_filters">Conv1 Filters:</label>
+            <input type="number" name="conv1_filters" id="conv1_filters" value="32">
+            <label for="conv2_filters">Conv2 Filters:</label>
+            <input type="number" name="conv2_filters" id="conv2_filters" value="64">
+            <label for="conv3_filters">Conv3 Filters:</label>
+            <input type="number" name="conv3_filters" id="conv3_filters" value="64">
+            <label for="dense_units">Dense Units:</label>
+            <input type="number" name="dense_units" id="dense_units" value="64">
+            <label for="input_shape">Input Shape (e.g., 224 for 224x224):</label>
+            <input type="number" name="input_shape" id="input_shape" value="224">
+            <label for="activation_function">Activation Function:</label>
+            <select name="activation_function" id="activation_function">
+                <option value="relu" selected>ReLU</option>
+                <option value="sigmoid">Sigmoid</option>
+                <option value="tanh">Tanh</option>
+            </select>
+            <h2>Training Parameters</h2>
+            <label for="epochs">Epochs:</label>
+            <input type="number" name="epochs" id="epochs" value="10">
+            <label for="model_name">Model Name:</label>
+            <input type="text" name="model_name" id="model_name" placeholder="Enter model name">
+            <button type="submit">Update Model</button>
+
+            <button type="button" onclick="trainModel()">Train Model</button>
+            <button onclick="downloadTrainedModel()">Download Trained Model</button>
+
+        </form>
+        
+
+        <!-- Add this div to your HTML where you want to display the training output -->
+        <div id="train-output" style="max-width: 600px; margin: 20px auto; padding: 20px; background: #0074bc; box-shadow: 0 0 10px rgba(234, 5, 5, 0.1); white-space: pre-line;"></div>
+
+
+        
+
+
+        <!-- Set Deploy File Name Form -->
+        <form action="/set_deploy_filename" method="post">
+            <label for="deploy_filename">Enter Deploy File Name:</label>
+            <input type="text" name="deploy_filename" id="deploy_filename" placeholder="File Name with .zip">
+            <button type="submit">Set Deploy File Name</button>
+        </form>
+
+        <!-- Add Labels Form -->
+        <form action="/add_labels" method="post" onsubmit="return addLabels()">
+            <label for="labels">Enter Labels (comma-separated):</label>
+            <input type="text" name="labels" id="labels" placeholder="ex1,ex2,...">
+            <button type="submit">Add Labels</button>
+        </form>
+
+        <!-- Labels Entered -->
+        <h4>Labels Entered</h4>
+        <div id="labels-list"></div>
+        <button onclick="clearLabels()">Clear Labels</button>
+
+        <!-- Set Deploy Target Form -->
+        <form action="/set_deploy_target" method="post">
+            <label for="deploy_target">Select Deploy Target:</label>
+            <select name="deploy_target" id="deploy_target">
+                <option value="arduino-nano-33-ble">Arduino Nano 33 BLE</option>
+                <option value="espressif-esp32">Espressif ESP32</option>
+            </select>
+            <button type="submit">Set Deploy Target</button>
+        </form>
+
+        <!-- Upload Model Form -->
+        <form action="/upload_model" method="post" enctype="multipart/form-data">
+            <label for="model">Upload Model File:</label>
+            <input type="file" name="model" id="model" accept=".h5">
+            <button type="submit">Upload Model</button>
+        </form>
+
+        <!-- Deploy, Profile, and Download Button -->
+        <button id="deploy-button" onclick="deployAndDownload()">Deploy, Profile, and Download</button>
+
+        <!-- Uploaded Images -->
+        <h4>Uploaded Images</h4>
+        <div id="image-gallery"></div>
+
+        
+    </div>
+
+    <!-- Contact Section -->
+    <section>
+        <h4>Contact</h4>
+        <p>Email: hari.es22@duk.ac.in</p>
+    </section>
+
+    <!-- Social Links -->
+    <div class="social-links">
+        <a href="https://www.instagram.com/harisankarrj" class="social-link" target="_blank">Instagram</a>
+        <!-- Add more social links as needed -->
+    </div>
+
+    <!-- AI GIF -->
+    
+    <script>
+
+        anime({
+            targets: 'h3',
+            translateY: [-30, 0],
+            opacity: [0, 1],
+            easing: 'easeOutExpo',
+            duration: 1500,
+            delay: 500
+        });
+
+        anime({
+            targets: 'p.sub-para',
+            translateY: [30, 0],
+            opacity: [0, 1],
+            easing: 'easeOutExpo',
+            duration: 1500,
+            delay: 1000
+        });
+        function runApp1() {
+            fetch('/run_app1')
+                .then(response => response.text())
+                .then(data => console.log(data))
+                .catch(error => console.error('Error:', error));
+        }
+
+        function updateLabels() {
+            fetch('/get_labels')
+                .then(response => response.json())
+                .then(data => {
+                    const labelsList = document.getElementById('labels-list');
+                    labelsList.innerHTML = '<strong>Labels Entered:</strong> ' + data.join(', ');
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function clearLabels() {
+            fetch('/clear_labels')
+                .then(response => response.text())
+                .then(data => {
+                    console.log(data);
+                    updateLabels();
+                    location.reload(); // Reload the page
+                })
+                .catch(error => console.error('Error:', error));
+            return false; // Prevent form submission
+        }
+
+        function updateModel() {
+        const conv1_filters = document.getElementById('conv1_filters').value;
+        const conv2_filters = document.getElementById('conv2_filters').value;
+        const conv3_filters = document.getElementById('conv3_filters').value;
+        const dense_units = document.getElementById('dense_units').value;
+        const input_shape = document.getElementById('input_shape').value;
+        const activation_function = document.getElementById('activation_function').value;
+        const epochs = document.getElementById('epochs').value;
+        const model_name = document.getElementById('model_name').value;
+
+        // Send the data to the server using fetch or AJAX
+        fetch('/update_model', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                conv1_filters: conv1_filters,
+                conv2_filters: conv2_filters,
+                conv3_filters: conv3_filters,
+                dense_units: dense_units,
+                input_shape: input_shape,
+                activation_function: activation_function,
+                epochs: epochs,
+                model_name: model_name,
+            }),
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log(data);
+            alert('Model architecture updated successfully!');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error updating model architecture.');
+        });
+
+        return false; // Prevent form submission
+    }
+
+
+        function deployAndDownload() {
+            fetch('/deploy_and_download')
+                .then(response => response.blob())
+                .then(blob => {
+                    const url = window.URL.createObjectURL(new Blob([blob]));
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'EasyTinyMl_model.zip'; // Set the desired filename
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(url);
+                })
+                .catch(error => console.error('Error deploying and downloading model:', error));
+        }
+
+        function addLabels() {
+            fetch('/add_labels', {
+                method: 'POST',
+                body: new FormData(document.querySelector('form[action="/add_labels"]'))
+            })
+                .then(response => response.text())
+                .then(data => {
+                    console.log(data);
+                    updateLabels();
+                    location.reload(); // Reload the page
+                })
+                .catch(error => console.error('Error:', error));
+            return false; // Prevent form submission
+        }
+
+        function trainModel() {
+         fetch('/train_model')
+        .then(response => response.text())
+        .then(data => {
+            // Display the output in the train-output element
+            const trainOutput = document.getElementById('train-output');
+            trainOutput.innerHTML = '<strong>Train Output:</strong><br>' + data;
+        })
+        .catch(error => console.error('Error:', error));
+        }
+
+
+        function downloadTrainedModel() {
+        const modelName = document.getElementById('model_name').value;  // Get the model name from the input field
+        const url = `/download_trained_model?model_name=${modelName}`;
+
+        fetch(url)
+            .then(response => {
+                const disposition = response.headers.get('content-disposition');
+                const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+                const matches = filenameRegex.exec(disposition);
+                let filename = matches && matches[1] ? matches[1] : 'download';
+
+                // Ensure the filename has the .h5 extension
+                if (!filename.toLowerCase().endsWith('.h5')) {
+                    filename += '.h5';
+                }
+
+                return response.blob().then(blob => {
+                    const a = document.createElement('a');
+                    a.href = URL.createObjectURL(blob);
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                });
+            })
+            .catch(error => console.error('Error downloading trained model:', error));
+        }
+        // Update labels on page load
+        updateLabels();
+    </script>
+</body>
+
+</html>
