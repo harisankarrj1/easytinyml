@@ -1,6 +1,6 @@
 # **EasyTinyML: An Automated TinyML Model Deployment Platform**
 
-![EasyTinyML Logo](https://via.placeholder.com/800x400?text=EasyTinyML+Platform)  
+![EasyTinyML Logo]([https://via.placeholder.com/800x400?text=EasyTinyML+Platform](https://drive.google.com/file/d/1UOrrjciaY-6nRUhvjRf-xW2axOzgeNIP/view?usp=drive_link))  
 *Simplify your journey from trained models to microcontroller deployment.*
 
 ---
