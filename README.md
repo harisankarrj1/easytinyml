@@ -73,8 +73,7 @@
 ## **Supported Microcontrollers**
 - Arduino Nano 33 BLE Sense  
 - ESP32  
-- Raspberry Pi Pico  
-- STM32 Series  
+
 
 ---
 
